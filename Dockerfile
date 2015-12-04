@@ -44,9 +44,7 @@ ADD ./conf/10-opcache.ini /etc/php.d/10-opcache.ini
 ADD ./conf/supervisord.conf /etc/supervisord.conf
 
 # open port 80,443
-EXPOSE 80
-EXPOSE 8080
-EXPOSE 443
+EXPOSE 80 443 8080
 
 #Run nginx engine
 CMD ["/usr/bin/supervisord","-n","-c","/etc/supervisord.conf"]

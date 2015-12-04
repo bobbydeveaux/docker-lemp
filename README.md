@@ -12,3 +12,6 @@ docker run -it -p 8080:80 -v /path/to/code:/srv dvo-lemp bash
 # clear all containers
 docker ps -a | grep 'hours ago' | awk '{print $1}' | xargs  docker rm
 
+# clear all images
+docker images | grep 'hours ago' | awk '{print $3}' | xargs docker rmi
+
