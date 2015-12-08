@@ -19,6 +19,7 @@ RUN yum -y install git --nogpgcheck
 RUN wget http://rpms.famillecollet.com/enterprise/remi-release-7.rpm
 RUN rpm -Uvh remi-release-7*.rpm
 RUN yum-config-manager --enable remi-php70
+RUN rpm -Uvh http://nginx.org/packages/centos/7/noarch/RPMS/nginx-release-centos-7-0.el7.ngx.noarch.rpm
 
 # install nginx
 RUN yum -y install nginx --nogpgcheck
