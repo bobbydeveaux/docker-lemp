@@ -40,6 +40,7 @@ RUN yum -y install supervisor --nogpgcheck
 # configs
 ADD ./conf/php.ini /etc/php.ini
 ADD ./conf/www.conf /etc/php-fpm.d/www.conf
+ADD ./conf/nginx.conf /etc/nginx/nginx.conf
 ADD ./conf/default.conf /etc/nginx/conf.d/default.conf
 ADD ./conf/10-opcache.ini /etc/php.d/10-opcache.ini
 ADD ./conf/supervisord.conf /etc/supervisord.conf
