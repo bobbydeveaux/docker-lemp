@@ -10,7 +10,7 @@ RUN yum -y install yum-utils
 
 # Install some must-haves
 RUN yum -y install epel-release --nogpgcheck
-RUN yum -y groupinstall 'Development Tools'
+RUN yum -y groupinstall "Development Tools"
 RUN yum -y install wget --nogpgcheck
 RUN yum -y install vim --nogpgcheck
 RUN yum -y install git --nogpgcheck
@@ -31,6 +31,12 @@ RUN yum -y install php php-common php-mbstring php-mcrypt php-devel php-xml php-
 
 # install php pecl libraries
 RUN yum -y install php-pecl-memcached php-pecl-mysql php-pecl-xdebug php-pecl-amqp --nogpgcheck
+
+# rabbitmq-server
+RUN yum -y install rabbitmq-server
+
+# bcmath, duh!
+RUN yum -y install php-bcmath
 
 # php-fpm
 RUN yum -y install php-fpm
