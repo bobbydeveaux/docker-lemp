@@ -1,5 +1,3 @@
-## docker run -it -p 8080:80 -v /Users/bobbeh/Vagrant/centos/code/dvo-crm:/var/www dvo-lemp bash
-
 FROM centos:7
 
 MAINTAINER bobby@dvomedia.net
@@ -12,8 +10,8 @@ RUN yum -y install yum-utils
 RUN yum -y install epel-release --nogpgcheck
 RUN yum -y groupinstall "Development Tools"
 RUN yum -y install wget --nogpgcheck
-RUN yum -y install vim --nogpgcheck
 RUN yum -y install git --nogpgcheck
+RUN yum -y install vim --nogpgcheck
 
 # install remi repo
 RUN wget http://rpms.famillecollet.com/enterprise/remi-release-7.rpm
@@ -42,10 +40,14 @@ RUN yum -y install mariadb-server
 # bcmath, duh!
 RUN yum -y install php-bcmath
 
+# pecl zip
+RUN yum -y install php-pecl-zip
+
 # php-fpm
 RUN yum -y install php-fpm
 
 RUN yum -y install supervisor --nogpgcheck
+
 
 # configs
 ADD ./conf/supervisord.conf /etc/supervisord.conf
@@ -59,6 +61,12 @@ ADD ./conf/10-opcache.ini /etc/php.d/10-opcache.ini
 COPY mariadb.sh /
 RUN chmod 777 mariadb.sh
 RUN /mariadb.sh devdb devuser devpass
+
+RUN usermod -u 1000 apache
+
+WORKDIR "/srv"
+
+RUN chown -R apache:apache .
 
 # open port 80,443
 EXPOSE 80 443 8080 3306

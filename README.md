@@ -3,8 +3,11 @@
 # build it
 docker build -t dvo-lemp .
 
-# run it
-docker run --name lemp -it -p 80:80 -p 3306:3306 -v /path/to/code:/srv -d dvo-lemp
+# run a web tier
+docker run --name lemp-frontend -it -p 80:80 -v /path/to/code:/srv -d dvo-lemp
+
+# run a db tier
+docker run --name lemp-db -it -p 3306:3306 -v /path/to/code:/srv -d dvo-lemp
 
 # ssh to it
 docker exec -i -t {containerid} bash 
