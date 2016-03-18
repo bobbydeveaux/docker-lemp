@@ -26,25 +26,31 @@ RUN echo "daemon off;" >> /etc/nginx/nginx.conf
 
 # install php7
 # breaking it down to see where dockerhub dies.
-RUN yum -y install php php-common
-RUN yum -y install php-mbstring 
-RUN yum -y install php-mcrypt
-RUN yum -y install php-devel 
-RUN yum -y install php-xml 
-RUN yum -y install php-mysqlnd 
-RUN yum -y install php-pdo 
-RUN yum -y install php-opcache --nogpgcheck
-RUN yum -y install php-pecl-zip
-RUN yum -y install php-bcmath
+RUN \
+	yum -y install \
+		php php-common \
+		php-mbstring \
+		php-mcrypt \
+		php-devel \
+		php-xml \
+		php-mysqlnd \
+		php-pdo \
+		php-opcache --nogpgcheck \
+		php-bcmath \
+
+		`# install the following PECL packages:` \
+		php-pecl-memcached \
+		php-pecl-mysql \
+		php-pecl-xdebug \
+		php-pecl-zip \
+		php-pecl-amqp --nogpgcheck \
+
+		`# Temporary workaround: one dependant package fails to install when building image (and the yum error is: Error unpacking rpm package httpd-2.4.6-40.el7.centos.x86_64` \
+		|| true
 
 # php-fpm
 RUN yum -y install php-fpm
 
-# install php pecl libraries
-RUN yum -y install php-pecl-memcached 
-RUN yum -y install php-pecl-mysql 
-RUN yum -y install php-pecl-xdebug 
-RUN yum -y install php-pecl-amqp --nogpgcheck
 
 # rabbitmq-server
 RUN yum -y install rabbitmq-server
