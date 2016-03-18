@@ -25,10 +25,26 @@ RUN yum -y install nginx --nogpgcheck
 RUN echo "daemon off;" >> /etc/nginx/nginx.conf
 
 # install php7
-RUN yum -y install php php-common php-mbstring php-mcrypt php-devel php-xml php-mysqlnd php-pdo php-opcache --nogpgcheck
+# breaking it down to see where dockerhub dies.
+RUN yum -y install php php-common
+RUN yum -y install php-mbstring 
+RUN yum -y install php-mcrypt
+RUN yum -y install php-devel 
+RUN yum -y install php-xml 
+RUN yum -y install php-mysqlnd 
+RUN yum -y install php-pdo 
+RUN yum -y install php-opcache --nogpgcheck
+RUN yum -y install php-pecl-zip
+RUN yum -y install php-bcmath
+
+# php-fpm
+RUN yum -y install php-fpm
 
 # install php pecl libraries
-RUN yum -y install php-pecl-memcached php-pecl-mysql php-pecl-xdebug php-pecl-amqp --nogpgcheck
+RUN yum -y install php-pecl-memcached 
+RUN yum -y install php-pecl-mysql 
+RUN yum -y install php-pecl-xdebug 
+RUN yum -y install php-pecl-amqp --nogpgcheck
 
 # rabbitmq-server
 RUN yum -y install rabbitmq-server
@@ -37,17 +53,8 @@ RUN yum -y install rabbitmq-server
 RUN yum -y install mariadb
 RUN yum -y install mariadb-server
 
-# bcmath, duh!
-RUN yum -y install php-bcmath
-
-# pecl zip
-RUN yum -y install php-pecl-zip
-
-# php-fpm
-RUN yum -y install php-fpm
-
+# Supervisord
 RUN yum -y install supervisor --nogpgcheck
-
 
 # configs
 ADD ./conf/supervisord.conf /etc/supervisord.conf
