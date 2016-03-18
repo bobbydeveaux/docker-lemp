@@ -35,6 +35,10 @@ RUN yum -y install php-pecl-memcached php-pecl-mysql php-pecl-xdebug php-pecl-am
 # rabbitmq-server
 RUN yum -y install rabbitmq-server
 
+# MariaDB
+RUN yum -y install mariadb
+RUN yum -y install mariadb-server
+
 # bcmath, duh!
 RUN yum -y install php-bcmath
 
@@ -44,15 +48,20 @@ RUN yum -y install php-fpm
 RUN yum -y install supervisor --nogpgcheck
 
 # configs
+ADD ./conf/supervisord.conf /etc/supervisord.conf
 ADD ./conf/php.ini /etc/php.ini
 ADD ./conf/www.conf /etc/php-fpm.d/www.conf
 ADD ./conf/nginx.conf /etc/nginx/nginx.conf
 ADD ./conf/default.conf /etc/nginx/conf.d/default.conf
 ADD ./conf/10-opcache.ini /etc/php.d/10-opcache.ini
-ADD ./conf/supervisord.conf /etc/supervisord.conf
+
+#maria db setup
+COPY mariadb.sh /
+RUN chmod 777 mariadb.sh
+RUN /mariadb.sh devdb devuser devpass
 
 # open port 80,443
-EXPOSE 80 443 8080
+EXPOSE 80 443 8080 3306
 
 #Run nginx engine
 CMD ["/usr/bin/supervisord","-n","-c","/etc/supervisord.conf"]

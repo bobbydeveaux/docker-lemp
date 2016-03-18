@@ -4,7 +4,7 @@
 docker build -t dvo-lemp .
 
 # run it
-docker run --name lemp -it -p 80:80  -v /path/to/code:/srv -d dvo-lemp
+docker run --name lemp -it -p 80:80 -p 3306:3306 -v /path/to/code:/srv -d dvo-lemp
 
 # ssh to it
 docker exec -i -t {containerid} bash 
