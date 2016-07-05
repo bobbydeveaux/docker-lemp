@@ -1,4 +1,5 @@
 # docker-lemp
+## NOTE: This is just an example build. It's not configurable per environment. For that, you can use the latest packer build here: https://hub.docker.com/r/bobbydvo/webapp-release
 
 # build it
 docker build -t dvo-lemp .
@@ -10,7 +11,7 @@ docker run --name lemp-frontend -it -p 80:80 -v /path/to/code:/srv -d dvo-lemp
 docker run --name lemp-db -it -p 3306:3306 -v /path/to/code:/srv -d dvo-lemp
 
 # ssh to it
-docker exec -i -t {containerid} bash 
+docker exec -i -t {containerid} bash
 
 # clear all containers
 docker ps -a | grep 'hours ago' | awk '{print $1}' | xargs  docker rm
